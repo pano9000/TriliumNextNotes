@@ -26,11 +26,10 @@ jobs:
       - name: Set up node & dependencies
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 20 # update to 22?
           cache: "npm"
 
       - run: npm ci
-
       - name: Run the TypeScript build
         run: npx tsc
   build_docker:
@@ -120,3 +119,22 @@ jobs:
         if: always()
         run: |
           journalctl -u docker CONTAINER_NAME=trilium_local --no-pager
+  build_server:
+    name: Build Server Package
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the repository
+        uses: actions/checkout@v4
+
+      - name: Set up node & dependencies
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20 # update to 22?
+          cache: "npm"
+        run: npm ci
+
+      - name: Run the Server build script
+        run: ./bin/build-server.sh
+
+      - name: Run Server
+        run: ./dist/trilium.sh

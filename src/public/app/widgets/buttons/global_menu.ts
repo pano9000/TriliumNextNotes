@@ -3,6 +3,9 @@ import BasicWidget from "../basic_widget.js";
 import utils from "../../services/utils.js";
 import UpdateAvailableWidget from "./update_available.js";
 import options from "../../services/options.js";
+import ZoomButtonsWidget from "./zoom_button.js";
+
+const zoomBW = new ZoomButtonsWidget();
 
 const TPL = `
 <div class="dropdown global-menu">
@@ -107,26 +110,10 @@ const TPL = `
             ${t("global_menu.show_shared_notes_subtree")}
         </li>
 
-        <div class="dropdown-divider"></div>
+        <div class="dropdown-divider">wat</div>
 
-        <span class="zoom-container dropdown-item dropdown-item-container">
-            <div>
-                <span class="bx bx-empty"></span>
-                ${t("global_menu.zoom")}
-            </div>
-
-            <div class="zoom-buttons">
-                <a data-trigger-command="toggleFullscreen" title="${t("global_menu.toggle_fullscreen")}" class="bx bx-expand-alt"></a>
-
-                &nbsp;
-
-                <a data-trigger-command="zoomOut" title="${t("global_menu.zoom_out")}" class="bx bx-minus"></a>
-
-                <span data-trigger-command="zoomReset" title="${t("global_menu.reset_zoom_level")}" class="zoom-state"></span>
-
-                <a data-trigger-command="zoomIn" title="${t("global_menu.zoom_in")}" class="bx bx-plus"></a>
-            </div>
-        </span>
+        ${zoomBW.$widget}
+        <div class="dropdown-divider">wat</div>
 
         <li class="dropdown-item toggle-pin">
             <span class="bx bx-pin"></span>
@@ -358,39 +345,19 @@ export default class GlobalMenuWidget extends BasicWidget {
             this.$widget.find(".zoom-container-separator").hide();
         }
 
-        this.$zoomState = this.$widget.find(".zoom-state");
-        this.$widget.on("show.bs.dropdown", () => {
-            this.updateZoomState();
-            if (this.tooltip) {
-                this.tooltip.hide();
-                this.tooltip.disable();
-            }
-        });
+
         if (this.tooltip) {
             this.$widget.on("hide.bs.dropdown", () => this.tooltip.enable());
         }
 
-        this.$widget.find(".zoom-buttons").on(
-            "click",
-            // delay to wait for the actual zoom change
-            () => setTimeout(() => this.updateZoomState(), 300)
-        );
+
 
         this.updateVersionStatus();
 
         setInterval(() => this.updateVersionStatus(), 8 * 60 * 60 * 1000);
     }
 
-    updateZoomState() {
-        if (!utils.isElectron()) {
-            return;
-        }
 
-        const zoomFactor = utils.dynamicRequire("electron").webFrame.getZoomFactor();
-        const zoomPercent = Math.round(zoomFactor * 100);
-
-        this.$zoomState.text(`${zoomPercent}%`);
-    }
 
     async updateVersionStatus() {
         await options.initializedPromise;

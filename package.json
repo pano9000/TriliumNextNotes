@@ -46,7 +46,7 @@
     "start-electron-forge": "npm run prepare-dist && electron-forge start",
     "make-electron": "npm run webpack && npm run prepare-dist && electron-forge make",
     "package-electron": "electron-forge package",
-    "prepare-dist": "rimraf ./dist && tsc && tsx ./bin/copy-dist.ts",
+    "prepare-dist": "rimraf ./dist && tsc -p tsconfig.build.json && tsx ./bin/copy-dist.ts",
     "watch-dist": "tsx ./bin/watch-dist.ts",
     "update-build-info": "tsx bin/update-build-info.ts",
     "integration-edit-db": "cross-env TRILIUM_INTEGRATION_TEST=edit TRILIUM_PORT=8081 TRILIUM_ENV=dev TRILIUM_DATA_DIR=./integration-tests/db nodemon src/main.ts",

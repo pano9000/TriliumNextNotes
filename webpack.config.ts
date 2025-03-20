@@ -4,6 +4,7 @@ import autoprefixer from "autoprefixer";
 import assetPath from "./src/services/asset_path.js";
 import miniCssExtractPlugin from "mini-css-extract-plugin";
 import type { Configuration } from "webpack";
+import TerserPlugin from "terser-webpack-plugin";
 
 const rootDir = path.dirname(fileURLToPath(import.meta.url));
 const config: Configuration = {
@@ -102,7 +103,16 @@ const config: Configuration = {
         }
     },
     devtool: "nosources-source-map",
-    target: "electron-renderer"
+    target: "electron-renderer",
+
+    optimization: {
+        minimize: true,
+        minimizer: [
+            new TerserPlugin({
+                minify: TerserPlugin.swcMinify
+            }),
+        ],
+    },
 };
 
 export default config;

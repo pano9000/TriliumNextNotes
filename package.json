@@ -176,6 +176,7 @@
     "@mind-elixir/node-menu": "1.0.5",
     "@playwright/test": "1.51.1",
     "@popperjs/core": "2.11.8",
+    "@swc/core": "1.11.11",
     "@types/archiver": "6.0.3",
     "@types/better-sqlite3": "7.6.12",
     "@types/bootstrap": "5.2.10",

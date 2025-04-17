@@ -42,14 +42,18 @@ describe("Login Route test", () => {
         // TriliumNextTODO: make setting cookieMaxAge via env variable work
         // => process.env.TRILIUM_SESSION_COOKIEMAXAGE
         // the custom cookieMaxAge is currently hardocded in the test data dir's config.ini
-
+        console.log("start test", new Date(), "\n\n\n-----------\n\n");
         const CUSTOM_MAX_AGE_SECONDS = 86400;
         const expectedExpiresDate = dayjs().utc().add(CUSTOM_MAX_AGE_SECONDS, "seconds").toDate().toUTCString();
+
+        console.log("before supertest", new Date(), "\n\n\n-----------\n\n");
 
         const res = await supertest(app)
             .post("/login")
             .send({ password: "demo1234", rememberMe: 1 })
             .expect(302)
+
+        console.log("after supertest", new Date(), "\n\n\n-----------\n\n");
 
         const setCookieHeader = res.headers["set-cookie"][0];
 
@@ -63,6 +67,8 @@ describe("Login Route test", () => {
         // ignore the seconds in the comparison, just to avoid flakiness in tests, 
         // if for some reason execution is slow between calculation of expected and actual
         expect(actualExpiresDate.slice(0,23)).toBe(expectedExpiresDate.slice(0,23))
+        console.log("end test", new Date(), "\n\n\n-----------\n\n");
+
     });
 
 

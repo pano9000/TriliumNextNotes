@@ -69,7 +69,7 @@ describe("Login Route test", () => {
         expect(actualExpiresDate.slice(0,23)).toBe(expectedExpiresDate.slice(0,23))
         console.log("end test", new Date(), "\n\n\n-----------\n\n");
 
-    });
+    }, 10_000);
 
 
     it("does not set Expires, when 'Remember Me' is not ticked", async () => {

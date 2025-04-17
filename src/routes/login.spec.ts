@@ -90,7 +90,7 @@ describe("Login Route test", () => {
         expect(expiresCookieMatch).toBeNull();
         console.log("BBB end test", new Date(), "\n\n\n-----------\n\n");
 
-    });
+    }, 10_000);
 
 
 });

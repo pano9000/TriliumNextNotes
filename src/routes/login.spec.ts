@@ -73,14 +73,14 @@ describe("Login Route test", () => {
 
 
     it("does not set Expires, when 'Remember Me' is not ticked", async () => {
-        console.log("start test", new Date(), "\n\n\n-----------\n\n");
+        console.log("BBB start test", new Date(), "\n\n\n-----------\n\n");
 
         const res = await supertest(app)
             .post("/login")
             .send({ password: "demo1234" })
             .expect(302)
         
-        console.log("after supertest", new Date(), "\n\n\n-----------\n\n");
+        console.log("BBB after supertest", new Date(), "\n\n\n-----------\n\n");
 
         const setCookieHeader = res.headers["set-cookie"][0];
 
@@ -88,7 +88,7 @@ describe("Login Route test", () => {
         const expiresCookieRegExp = /Expires=(?<date>[\w\s,:]+)/;
         const expiresCookieMatch = setCookieHeader.match(expiresCookieRegExp);
         expect(expiresCookieMatch).toBeNull();
-        console.log("end test", new Date(), "\n\n\n-----------\n\n");
+        console.log("BBB end test", new Date(), "\n\n\n-----------\n\n");
 
     });
 
